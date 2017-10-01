@@ -1,0 +1,27 @@
+{
+  "name": "vaxic",
+  "version": "1.0.0",
+  "description": "The lightweight, flexible web framework",
+  "main": "lib/Vaxic.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethanent/vaxic.git"
+  },
+  "keywords": [
+    "web",
+    "api",
+    "app",
+    "webapp",
+    "vaxic",
+    "http"
+  ],
+  "author": "Ethan Davis",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/ethanent/vaxic/issues"
+  },
+  "homepage": "https://github.com/ethanent/vaxic#readme"
+}
