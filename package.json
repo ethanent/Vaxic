@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/ethanent/vaxic/issues"
   },
-  "homepage": "https://github.com/ethanent/vaxic#readme"
+  "homepage": "https://github.com/ethanent/vaxic#readme",
+  "dependencies": {
+    "lightcookie": "^1.0.24"
+  }
 }
