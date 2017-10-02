@@ -4,7 +4,9 @@
   "description": "The lightweight, flexible web framework",
   "main": "lib/Vaxic.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "prepush": "npm test",
+    "prepublishOnly": "npm test"
   },
   "repository": {
     "type": "git",
@@ -26,5 +28,10 @@
   "homepage": "https://github.com/ethanent/vaxic#readme",
   "dependencies": {
     "lightcookie": "^1.0.24"
+  },
+  "devDependencies": {
+    "hitched": "^1.1.25",
+    "phin": "^2.4.18",
+    "whew": "^1.1.3"
   }
 }

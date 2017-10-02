@@ -1,4 +1,4 @@
-<p align="center" style="text-align: center;"><img src="https://raw.githubusercontent.com/ethanent/phin/master/media/phin-textIncluded.png" width="250" alt="vaxic logo"/></p>
+<p align="center" style="text-align: center;"><img src="https://github.com/ethanent/vaxic/blob/master/media/VaxicLogo.png?raw=true" width="300" alt="vaxic logo"/></p>
 
 ---
 
@@ -37,13 +37,13 @@ Currently only one built-in extension exists. It's called `static`. It can be us
 app.use(Vaxic.static('/site'))
 ```
 
-## Catches
+## Handles
 
-Catches are methods you provide to be used as request handlers for specific requests.
+Handles are methods you provide to be used as request handlers for specific requests.
 
 You can target them by request method or by URL (or both or neither!)
 
-Creating catches is as easy as...
+Creating handles is as easy as...
 
 ```javascript
 app.add('POST', (req, res) => {
@@ -79,7 +79,7 @@ All of the compression methods add the appropriate `content-encoding` header. Us
 
 ## Creating extensions
 
-Making extensions is easy! Extensions are just handler methods to which requests are passed before being handed over to catches.
+Making extensions is easy! Extensions are just methods to which requests are passed before (or instead of) being handed over to handles.
 
 ```javascript
 (req, res, next) => {
