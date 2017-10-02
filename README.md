@@ -23,5 +23,69 @@ app.add('GET', '/getEndpoint', (req, res) => {
 	res.writeHead(200)
 	res.end('Hello.')
 })
+
+app.listen(80, '0.0.0.0')
 ```
 
+## Extensions
+
+Extensions are super powerful overlayers you can add onto your app to add new functionality!
+
+Currently only one built-in extension exists. It's called `static`. It can be used to serve static files.
+
+```javascript
+app.use(Vaxic.static('/site'))
+```
+
+## Catches
+
+Catches are methods you provide to be used as request handlers for specific requests.
+
+You can target them by request method or by URL (or both or neither!)
+
+Creating catches is as easy as...
+
+```javascript
+app.add('POST', (req, res) => {
+	// This catch handles all POST requests.
+
+	console.log(req.body)
+})
+```
+
+## The Request and Response classes, extended
+
+Vaxic `request` and `response` objects passed into handlers extend the `http.ClientRequest` and `http.ServerResponse` objects.
+
+### How Vaxic changes `ClientRequest`
+
+Vaxic adds the `body` property to requests which contain a body. (Ex. POST requests with bodies.)
+
+Vaxic also adds the `cookie` property to requests. If a request contained a cookie header, it is parsed into this object using [lightcookie](https://github.com/ethanent/lightcookie).
+
+Vaxic changes the url property of ClientRequest by URL parsing it into a [URL object](https://nodejs.org/api/url.html#url_class_url). (Without its querystring parsed.)
+
+### How Vaxic changes `ServerResponse`
+
+Vaxic adds the endGzip, endDeflate, and endCompressed methods to the `http.ServerResponse` object.
+
+`ServerResponse.endGzip(body, statusCode, ?headers, ?cb)`
+
+`ServerResponse.endDeflate(body, statusCode, ?headers, ?cb)`
+
+`ServerResponse.endCompressed(body, ?statusCode:200, ?headers, ?cb)`
+
+All of the compression methods add the appropriate `content-encoding` header. Use `endCompressed` to autodetect the preferred compression method of the client based on the `accept-encoding` header.
+
+## Creating extensions
+
+Making extensions is easy! Extensions are just handler methods to which requests are passed before being handed over to catches.
+
+```javascript
+(req, res, next) => {
+	res.setHeader('Powered-By': 'Vaxic-Engine')
+	next()
+}
+```
+
+Calling next() is important because it allows the request to propagate to the next applicable handler. (An extension or catch.)
