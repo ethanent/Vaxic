@@ -4,7 +4,7 @@
 
 > The ultra-light superpower Node web framework
 
-[Full documentation](https://ethanent.github.io/vaxic/) | [GitHub](https://github.com/ethanent/vaxic) | [NPM](https://www.npmjs.com/package/vaxic)
+[GitHub](https://github.com/ethanent/vaxic) | [NPM](https://www.npmjs.com/package/vaxic)
 
 ## Install
 
@@ -47,9 +47,19 @@ Creating handles is as easy as...
 
 ```javascript
 app.add('POST', (req, res) => {
-	// This catch handles all POST requests.
+	// This handle handles all POST requests.
 
 	console.log(req.body)
+})
+```
+
+### Regular expressions in handles
+
+Regular expressions can be used as handle URL targets!
+
+```javascript
+app.add('GET', /^\/api/, (req, res) => {
+	// This handle handles all GET requests to /api and all subpaths of /api!
 })
 ```
 
