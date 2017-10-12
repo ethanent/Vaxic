@@ -98,4 +98,4 @@ Making extensions is easy! Extensions are just methods to which requests are pas
 }
 ```
 
-Calling `next()` in extension handler methods is important because it allows the request to propagate to the next applicable handler. (An extension or catch.)
+Calling `next()` in extension handler methods is important because it allows the request to propagate to the next applicable handler. (An extension or handle.)
