@@ -22,6 +22,17 @@ app.add('POST', /^\/take\//g, (req, res) => {
 	res.end('hey')
 })
 
+app.add('POST', '/testbody', (req, res) => {
+	if (req.body.toString() === 'testing124') {
+		res.writeHead(200)
+		res.end('Okie dokie.')
+	}
+	else {
+		res.writeHead(400)
+		res.end()
+	}
+})
+
 app.use(Vaxic.static(__dirname))
 
 w.add('Extensions changing request and response objects', (result) => {
@@ -79,6 +90,23 @@ w.add('No handler by default for unhandled requests', (result) => {
 		result(false, 'Recieved response to (should-be) unhandled request.')
 	}).catch((err) => {
 		result(true, 'Response was not recieved for request without corresponding handler.')
+	})
+})
+
+w.add('POST body recieving', (result) => {
+	p({
+		'url': 'http://localhost:5138/testbody',
+		'method': 'POST',
+		'data': 'testing124'
+	}).then((res) => {
+		if (res.statusCode === 200) {
+			result(true, 'Server correctly recieved body')
+		}
+		else {
+			result(false, 'Server did not recieve body.')
+		}
+	}).catch((err) => {
+		result(false, err)
 	})
 })
 
