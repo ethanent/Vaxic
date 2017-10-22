@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 	return new Promise((resolve, reject) => {
 		if (req.url.pathname === '/asyncExtension') {
 			res.writeHead(200)
-			res.end('Ok.')
+				res.end('Ok.')
 		}
 		else {
 			next()
@@ -90,9 +90,7 @@ w.add('Extensions changing request and response objects', (result) => {
 		else {
 			result(false, 'Did not get correct header at client.')
 		}
-	}).catch((err) => {
-		result(false, err)
-	})
+	}).catch((err) => result(false, err))
 })
 
 w.add('Catchall URL definitions in handles', (result) => {
@@ -113,15 +111,37 @@ w.add('Vaxic static serves files properly', (result) => {
 		'method': 'GET',
 		'timeout': 400
 	}).then((res) => {
-		if (res.statusCode === 200 && res.body.toString().indexOf('my-test-code726483') !== -1) {
+		if (res.statusCode === 200 && res.body.indexOf('my-test-code726483') !== -1) {
 			result(true, 'Got own file.')
 		}
 		else {
 			result(false, 'Didn\'t recieve expected response.')
 		}
-	}).catch((err) => {
-		result(false, err)
-	})
+	}).catch((err) => result(false, err))
+})
+
+w.add('Vaxic sends Last-Modified headers and parses If-Modified-Since headers correctly', (result) => {
+	p({
+		'url': 'http://localhost:5138/test.js',
+		'method': 'GET',
+		'timeout': 400
+	}).then((res) => {
+		const lastModified = res.headers['last-modified']
+		p({
+			'url': 'http://localhost:5138/test.js',
+			'method': 'GET',
+			'timeout': 400,
+			'headers': {
+				'If-Modified-Since': lastModified.toString()
+			}
+		}).then((res) => {
+			if (res.statusCode === 304 && res.body.length === 0) {
+				result(true, 'The result was cached properly.')
+			} else {
+				result(false, 'The result was not cached properly.')
+			}
+		}).catch((err) => result(false, err))
+	}).catch((err) => result(false, err))
 })
 
 w.add('No handler by default for unhandled requests', (result) => {
@@ -148,9 +168,7 @@ w.add('POST body recieving', (result) => {
 		else {
 			result(false, 'Server did not recieve body.')
 		}
-	}).catch((err) => {
-		result(false, err)
-	})
+	}).catch((err) => result(false, err))
 })
 
 w.add('Cookie parsing', (result) => {
@@ -167,9 +185,7 @@ w.add('Cookie parsing', (result) => {
 		else {
 			result(false, res.body)
 		}
-	}).catch((err) => {
-		result(false, err)
-	})
+	}).catch((err) => result(false, err))
 })
 
 w.add('Async / Promise handlers', (result) => {
@@ -184,9 +200,7 @@ w.add('Async / Promise handlers', (result) => {
 		else {
 			result(false, 'Async handler did not function as expected.')
 		}
-	}).catch((err) => {
-		result(false, err)
-	})
+	}).catch((err) => result(false, err))
 })
 
 w.add('Async / Promise extensions', (result) => {
@@ -201,9 +215,7 @@ w.add('Async / Promise extensions', (result) => {
 		else {
 			result(false, 'Async extension did not function as expected.')
 		}
-	}).catch((err) => {
-		result(false, err)
-	})
+	}).catch((err) => result(false, err))
 })
 
 app.listen(5138, 'localhost', w.test)
