@@ -1,7 +1,5 @@
 const path = require('path')
 
-const useAsync = !(process.version.indexOf('v6') === 0)
-
 const w = require('whew')
 const p = require('phin').promisified
 
@@ -14,8 +12,8 @@ app.use((req, res, next) => {
 	next()
 })
 
-if (useAsync) {
-	app.use(async function (req, res, next) {
+app.use((req, res, next) => {
+	return new Promise((resolve, reject) => {
 		if (req.url.pathname === '/asyncExtension') {
 			res.writeHead(200)
 			res.end('Ok.')
@@ -24,9 +22,9 @@ if (useAsync) {
 			next()
 		}
 
-		throw new Error('Catch this.')
+		reject(new Error('Catch this.'))
 	})
-}
+})
 
 app.add('GET', '/main', (req, res) => {
 	res.writeHead(200)
@@ -61,14 +59,14 @@ app.add('POST', '/testbody', (req, res) => {
 	}
 })
 
-if (useAsync) {
-	app.add('GET', '/asyncHandler', async function (req, res) {
+app.add('GET', '/asyncHandler', (req, res) => {
+	return new Promise((resolve, reject) => {
 		res.writeHead(200)
 		res.end('Ok.')
 
-		throw new Error('Catch this.')
+		reject(new Error('Catch this.'))
 	})
-}
+})
 
 app.use(Vaxic.static(__dirname))
 
@@ -174,40 +172,38 @@ w.add('Cookie parsing', (result) => {
 	})
 })
 
-if (useAsync) {
-	w.add('Async / Promise handlers', (result) => {
-		p({
-			'url': 'http://localhost:5138/asyncHandler',
-			'method': 'GET',
-			'timeout': 800
-		}).then((res) => {
-			if (res.statusCode === 200) {
-				result(true, 'Async handler functioned as expected.')
-			}
-			else {
-				result(false, 'Async handler did not function as expected.')
-			}
-		}).catch((err) => {
-			result(false, err)
-		})
+w.add('Async / Promise handlers', (result) => {
+	p({
+		'url': 'http://localhost:5138/asyncHandler',
+		'method': 'GET',
+		'timeout': 800
+	}).then((res) => {
+		if (res.statusCode === 200) {
+			result(true, 'Async handler functioned as expected.')
+		}
+		else {
+			result(false, 'Async handler did not function as expected.')
+		}
+	}).catch((err) => {
+		result(false, err)
 	})
+})
 
-	w.add('Async / Promise extensions', (result) => {
-		p({
-			'url': 'http://localhost:5138/asyncExtension',
-			'method': 'GET',
-			'timeout': 800
-		}).then((res) => {
-			if (res.statusCode === 200) {
-				result(true, 'Async extension functioned as expected.')
-			}
-			else {
-				result(false, 'Async extension did not function as expected.')
-			}
-		}).catch((err) => {
-			result(false, err)
-		})
+w.add('Async / Promise extensions', (result) => {
+	p({
+		'url': 'http://localhost:5138/asyncExtension',
+		'method': 'GET',
+		'timeout': 800
+	}).then((res) => {
+		if (res.statusCode === 200) {
+			result(true, 'Async extension functioned as expected.')
+		}
+		else {
+			result(false, 'Async extension did not function as expected.')
+		}
+	}).catch((err) => {
+		result(false, err)
 	})
-}
+})
 
 app.listen(5138, 'localhost', w.test)
