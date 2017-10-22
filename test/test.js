@@ -12,6 +12,18 @@ app.use((req, res, next) => {
 	next()
 })
 
+app.use(async function (req, res, next) {
+	if (req.url.pathname === '/asyncExtension') {
+		res.writeHead(200)
+		res.end('Ok.')
+	}
+	else {
+		next()
+	}
+
+	throw new Error('Catch this.')
+})
+
 app.add('GET', '/main', (req, res) => {
 	res.writeHead(200)
 	res.end('hello')
@@ -45,7 +57,22 @@ app.add('POST', '/testbody', (req, res) => {
 	}
 })
 
+app.add('GET', '/asyncHandler', async function (req, res) {
+	res.writeHead(200)
+	res.end('Ok.')
+
+	throw new Error('Catch this.')
+})
+
 app.use(Vaxic.static(__dirname))
+
+app.on('promiseExtensionRejection', (err) => {
+	console.log('Handled extension handler rejection! (This is good.)')
+})
+
+app.on('promiseHandleRejection', (err) => {
+	console.log('Handled handle handler rejection! (This is good.)')
+})
 
 w.add('Extensions changing request and response objects', (result) => {
 	p({
@@ -135,6 +162,40 @@ w.add('Cookie parsing', (result) => {
 		}
 		else {
 			result(false, res.body)
+		}
+	}).catch((err) => {
+		result(false, err)
+	})
+})
+
+w.add('Async / Promise handlers', (result) => {
+	p({
+		'url': 'http://localhost:5138/asyncHandler',
+		'method': 'GET',
+		'timeout': 800
+	}).then((res) => {
+		if (res.statusCode === 200) {
+			result(true, 'Async handler functioned as expected.')
+		}
+		else {
+			result(false, 'Async handler did not function as expected.')
+		}
+	}).catch((err) => {
+		result(false, err)
+	})
+})
+
+w.add('Async / Promise extensions', (result) => {
+	p({
+		'url': 'http://localhost:5138/asyncExtension',
+		'method': 'GET',
+		'timeout': 800
+	}).then((res) => {
+		if (res.statusCode === 200) {
+			result(true, 'Async extension functioned as expected.')
+		}
+		else {
+			result(false, 'Async extension did not function as expected.')
 		}
 	}).catch((err) => {
 		result(false, err)

@@ -29,7 +29,7 @@ app.listen(80, '0.0.0.0')
 
 ## Extensions
 
-Extensions are super powerful overlayers you can add onto your app to add new functionality!
+Extensions are super powerful overlays you can add onto your app to add new functionality!
 
 Currently only one built-in extension exists. It's called `static`. It can be used to serve static files.
 
@@ -65,7 +65,7 @@ app.add('GET', /^\/api/, (req, res) => {
 
 ## The Request and Response classes, extended
 
-Vaxic `request` and `response` objects passed into handlers extend the `http.ClientRequest` and `http.ServerResponse` objects.
+Vaxic `request` and `response` objects passed to handlers extend the `http.ClientRequest` and `http.ServerResponse` objects.
 
 ### How Vaxic changes `ClientRequest`
 
@@ -99,3 +99,25 @@ Making extensions is easy! Extensions are just methods to which requests are pas
 ```
 
 Calling `next()` in extension handler methods is important because it allows the request to propagate to the next applicable handler. (An extension or handle.)
+
+## Async / Promise handler methods for handles and extensions
+
+Async or Promise-returning functions may be used as handlers in handles and extensions.
+
+If a promise returned by a Promise-based handler is rejected, the rejection will be caught and a `promiseHandleRejection` (for handles) or a `promiseExtensionRejection` (for extensions) will be emitted with the error from the Vaxic instance.
+
+Ex. for Async handle handlers:
+
+```javascript
+app.add('GET', '/async', async function (req, res) {
+	// Perform await / other logic if desired and handle request.
+})
+```
+
+Ex. for async extension handlers:
+
+```javascript
+app.use(async function (req, res, next) {
+	// Perform await / other logic if desired and handle request.
+})
+```
