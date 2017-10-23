@@ -87,6 +87,18 @@ Vaxic adds the endGzip, endDeflate, and endCompressed methods to the `http.Serve
 
 All of the compression methods add the appropriate `content-encoding` header. Use `endCompressed` to autodetect the preferred compression method of the client based on the `accept-encoding` header.
 
+## Using another HTTP server package (such as HTTPS)
+
+If you'd like to use your Vaxic app with another HTTP server such as Node's built-in HTTPS module, you can do so using `app.serverHandler`.
+
+For example:
+
+```javascript
+const https = require('https')
+
+https.createServer(app.serverHandler).listen(80)
+```
+
 ## Creating extensions
 
 Making extensions is easy! Extensions are just methods to which requests are passed before (or instead of) being handed over to handles.
