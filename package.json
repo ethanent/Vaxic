@@ -1,6 +1,6 @@
 {
   "name": "vaxic",
-  "version": "1.2.3",
+  "version": "2.0.0",
   "description": "The lightweight, flexible web framework",
   "main": "lib/Vaxic.js",
   "scripts": {
@@ -26,9 +26,6 @@
     "url": "https://github.com/ethanent/vaxic/issues"
   },
   "homepage": "https://github.com/ethanent/vaxic#readme",
-  "optionalDependencies": {
-    "lightcookie": "^1.0.24"
-  },
   "devDependencies": {
     "hitched": "^1.1.25",
     "phin": "^2.4.18",

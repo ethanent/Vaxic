@@ -71,8 +71,6 @@ Vaxic `request` and `response` objects passed to handlers extend the `http.Clien
 
 Vaxic adds the `body` property to requests which contain a body. (Ex. POST requests with bodies.)
 
-Vaxic also adds the `cookie` property to requests. If a request contained a cookie header, it is parsed into this object using [lightcookie](https://github.com/ethanent/lightcookie).
-
 Vaxic changes the url property of ClientRequest by URL parsing it into a [URL object](https://nodejs.org/api/url.html#url_class_url). (Without its querystring parsed.)
 
 ### How Vaxic changes `ServerResponse`

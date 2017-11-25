@@ -36,18 +36,6 @@ app.add('POST', /^\/take\//g, (req, res) => {
 	res.end('hey')
 })
 
-app.add('GET', '/parsecookie', (req, res) => {
-	let cookie = req.cookie
-	if (cookie.hey === 'hi') {
-		res.writeHead(200)
-		res.end('Recieved correct cookie data. hey=' + cookie.hey)
-	}
-	else {
-		res.writeHead(500)
-		res.end('Did not recieve correct cookie data. ' + req.cookie)
-	}
-})
-
 app.add('POST', '/testbody', (req, res) => {
 	if (req.body.toString() === 'testing124') {
 		res.writeHead(200)
@@ -147,25 +135,6 @@ w.add('POST body recieving', (result) => {
 		}
 		else {
 			result(false, 'Server did not recieve body.')
-		}
-	}).catch((err) => {
-		result(false, err)
-	})
-})
-
-w.add('Cookie parsing', (result) => {
-	p({
-		'url': 'http://localhost:5138/parsecookie',
-		'method': 'GET',
-		'headers': {
-			'cookie': 'HttpOnly;hey=hi;hello=hi;test=vaxic'
-		}
-	}).then((res) => {
-		if (res.statusCode === 200) {
-			result(true, res.body)
-		}
-		else {
-			result(false, res.body)
 		}
 	}).catch((err) => {
 		result(false, err)
