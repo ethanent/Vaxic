@@ -6,7 +6,10 @@
 
 [GitHub](https://github.com/ethanent/vaxic) | [NPM](https://www.npmjs.com/package/vaxic)
 
-[![ethanent Discord Server Status](https://discordapp.com/api/guilds/386353885377331211/widget.png)](https://ethanent.me/discord "ethanent Official Discord Server")
+<a href="https://ethanent.me/discord">
+	<img src="https://ethanent.me/images/social/discord.svg" width="40" style="display: inline; vertical-align: middle;" alt="Discord logo"/>
+	Chat on Discord
+</a>
 
 ## Install
 
