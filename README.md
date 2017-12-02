@@ -6,6 +6,8 @@
 
 [GitHub](https://github.com/ethanent/vaxic) | [NPM](https://www.npmjs.com/package/vaxic)
 
+[![ethanent Discord Server Status](https://discordapp.com/api/guilds/386353885377331211/widget.png)](https://ethanent.me/discord "ethanent Official Discord Server")
+
 ## Install
 
 ```shell
