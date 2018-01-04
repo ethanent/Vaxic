@@ -6,11 +6,6 @@
 
 [GitHub](https://github.com/ethanent/vaxic) | [NPM](https://www.npmjs.com/package/vaxic)
 
-<a href="https://ethanent.me/discord">
-	<img src="https://ethanent.me/images/social/discord.svg" width="40" style="display: inline; vertical-align: middle;" alt="Discord logo"/>
-	Chat on Discord
-</a>
-
 ## Install
 
 ```shell
