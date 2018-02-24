@@ -31,10 +31,30 @@ app.listen(80, '0.0.0.0')
 
 Extensions are super powerful overlays you can add onto your app to add new functionality!
 
-Currently only one built-in extension exists. It's called `static`. It can be used to serve static files.
+Two built-in extensions exist. One is called `static`. It can be used to serve static files.
 
-```javascript
+```js
 app.use(Vaxic.static('/site'))
+```
+
+The other built-in extension is called route, and it is currently **experimental**.
+
+It can be used to route requests.
+
+```js
+app.use(Vaxic.route)
+
+app.add('POST', async (req, res) => {
+	try {
+		await res.route({
+			'host': 'localhost:5135'
+		})
+	}
+	catch (err) {
+		res.writeHead(500)
+		res.end('Failed to route!')
+	}
+})
 ```
 
 ## Handles
@@ -45,7 +65,7 @@ You can target them by request method or by URL (or both or neither!)
 
 Creating handles is as easy as...
 
-```javascript
+```js
 app.add('POST', (req, res) => {
 	// This handle handles all POST requests.
 
@@ -57,7 +77,7 @@ app.add('POST', (req, res) => {
 
 Regular expressions can be used as handle URL targets!
 
-```javascript
+```js
 app.add('GET', /^\/api/, (req, res) => {
 	// This handle handles all GET requests to /api and all subpaths of /api!
 })

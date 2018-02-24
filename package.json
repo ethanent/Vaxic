@@ -1,6 +1,6 @@
 {
   "name": "vaxic",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "The lightweight, flexible web framework",
   "main": "lib/Vaxic.js",
   "scripts": {
@@ -18,7 +18,9 @@
     "app",
     "webapp",
     "vaxic",
-    "http"
+    "http",
+    "routing",
+    "route"
   ],
   "author": "Ethan Davis",
   "license": "SEE LICENSE IN LICENSE.md",
@@ -28,7 +30,9 @@
   "homepage": "https://github.com/ethanent/vaxic#readme",
   "devDependencies": {
     "hitched": "^1.1.25",
-    "phin": "^2.4.18",
     "whew": "^1.1.3"
+  },
+  "dependencies": {
+    "phin": "^2.9.0"
   }
 }
