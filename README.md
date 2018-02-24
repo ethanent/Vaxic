@@ -37,9 +37,7 @@ Two built-in extensions exist. One is called `static`. It can be used to serve s
 app.use(Vaxic.static('/site'))
 ```
 
-The other built-in extension is called route, and it is currently **experimental**.
-
-It can be used to route requests.
+The other built-in extension is called route. It can be used to route requests.
 
 ```js
 app.use(Vaxic.route)
@@ -47,7 +45,7 @@ app.use(Vaxic.route)
 app.add('POST', async (req, res) => {
 	try {
 		await res.route({
-			'host': 'localhost:5135'
+			'origin': 'http://localhost:5135'
 		})
 	}
 	catch (err) {
