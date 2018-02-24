@@ -1,6 +1,6 @@
 {
   "name": "vaxic",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "The lightweight, flexible web framework",
   "main": "lib/Vaxic.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "route"
   ],
   "author": "Ethan Davis",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ethanent/vaxic/issues"
   },
