@@ -61,6 +61,11 @@ app.add('/testNotMethodSpecific', (req, res) => {
 	res.end('Hello!')
 })
 
+app.add((req, res) => {
+	res.writeHead(404)
+	res.end('Error 404: Resource not found!')
+})
+
 app.use(Vaxic.static(__dirname))
 
 app.on('promiseExtensionRejection', (err) => {
@@ -114,18 +119,6 @@ w.add('Vaxic static serves files properly', (result) => {
 		}
 	}).catch((err) => {
 		result(false, err)
-	})
-})
-
-w.add('No handler by default for unhandled requests', (result) => {
-	p({
-		'url': 'http://localhost:5138/donothandle',
-		'method': 'GET',
-		'timeout': 400
-	}).then((res) => {
-		result(false, 'Recieved response to (should-be) unhandled request.')
-	}).catch((err) => {
-		result(true, 'Response was not recieved for request without corresponding handler.')
 	})
 })
 
@@ -187,6 +180,23 @@ w.add('Non-method-specific request', (result) => {
 		'timeout': 800
 	}).then((res) => {
 		if (res.body.toString() === 'Hello!') {
+			result(true, 'Utilized correct handle.')
+		}
+		else {
+			result(false, 'Failed to utilize the correct handle.')
+		}
+	}).catch((err) => {
+		result(false, err)
+	})
+})
+
+w.add('Catchall handler', (result) => {
+	p({
+		'url': 'http://localhost:5138/thiswill404',
+		'method': 'POST',
+		'timeout': 800
+	}).then((res) => {
+		if (res.statusCode === 404) {
 			result(true, 'Utilized correct handle.')
 		}
 		else {
