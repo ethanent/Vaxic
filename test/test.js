@@ -56,6 +56,11 @@ app.add('GET', '/asyncHandler', (req, res) => {
 	})
 })
 
+app.add('/testNotMethodSpecific', (req, res) => {
+	res.writeHead(200)
+	res.end('Hello!')
+})
+
 app.use(Vaxic.static(__dirname))
 
 app.on('promiseExtensionRejection', (err) => {
@@ -169,6 +174,23 @@ w.add('Async / Promise extensions', (result) => {
 		}
 		else {
 			result(false, 'Async extension did not function as expected.')
+		}
+	}).catch((err) => {
+		result(false, err)
+	})
+})
+
+w.add('Non-method-specific request', (result) => {
+	p({
+		'url': 'http://localhost:5138/testNotMethodSpecific',
+		'method': 'GET',
+		'timeout': 800
+	}).then((res) => {
+		if (res.body.toString() === 'Hello!') {
+			result(true, 'Utilized correct handle.')
+		}
+		else {
+			result(false, 'Failed to utilize the correct handle.')
 		}
 	}).catch((err) => {
 		result(false, err)

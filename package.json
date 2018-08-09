@@ -1,6 +1,6 @@
 {
   "name": "vaxic",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "The lightweight, flexible web framework",
   "main": "lib/Vaxic.js",
   "scripts": {
